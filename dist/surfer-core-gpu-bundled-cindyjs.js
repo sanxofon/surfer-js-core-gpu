@@ -26640,7 +26640,7 @@ $3d8c40b4c2e4f5fe$exports = "//initialize some variables\nmat = [\n    [0.3513, 
 
 
 var $43704383203b4f0d$exports = {};
-$43704383203b4f0d$exports = "gsave();\nif(aspectRatio > 1.0,scale(1.0/aspectRatio));\n\n//the following is executed for every rendered frame\nif (dragging,\n    dx = 3 * (sx - mouse().x); dy = 3 * (sy - mouse().y);,\n    dx = .9*dx; dy = .9*dy;\n);\n\nsx = mouse().x;\nsy = mouse().y;\n\n//the rotation matrix: It is modified either if the user is dragging or time passes\nmat = mat * (\n    (1, 0, 0),\n    (0, cos(dy), -sin(dy)),\n    (0, sin(dy), cos(dy))\n) * (\n    (cos(dx), 0, -sin(dx)),\n    (0, 1, 0),\n    (sin(dx), 0, cos(dx))\n);\n\n\n//configuration for the lights in the scene. A light has a position, a gamma-parameter for its shininess and a color\nlightdirs = [\n    ray((.0, .0), -100), //enlights parts of the surface which normal points away from the camera\n    ray((.0, .0), -100),\n    ray((.0, .0), 100), //Has an effect, if the normal of the surface points to the camera\n    ray((.0, .0), 100),\n    (-10, 10, -2.),\n    (10, -8, 3.)\n];\n\ngamma = [1, 10, 1, 10, 5, 5];\n\n        \ncolors = [\n    (.3, .5, 1.),\n    (1, 2, 2) / 2,\n    (1., 0.2, 0.1),\n    (2, 2, 1) / 2,\n    .9 * (.7, .8, .3),\n    .9 * (.6, .1, .6)\n];\n\n\n// translucent surface: find all roots from back to front\n// opaque surface: stop after first root has been found\nfindAllRoots = alpha < .99;\n\n\ncolorplot(\n  spolyvalues = apply([-2, 0, 2], v, S(ray(#, v))); //evaluate S along ray\n  spoly = B3 * spolyvalues;                         //interpolate to monomial basis\n  D = (spoly_2 * spoly_2) - 4. * spoly_3 * spoly_1; //discriminant of spoly\n  \n  color = (0., 0., 0., 0.); // background color: fully transparent\n  if (D >= 0, //ray intersects ball\n    color = computeColor(\n      #, \n      (-spoly_2 - re(sqrt(D))) / (2 * spoly_3), //intersection entering the ball\n      (-spoly_2 + re(sqrt(D))) / (2 * spoly_3), //intersection leaving the ball\n      color\n    );              \n  );\n  color //return value: WebGL uses premultiplied alpha by default for RGBA which is already our internal representation!!!\n); //render the scene. # is the pixel coordinate\n\ngrestore();\n\n// loop animation if there is motion (and we are not dragging), otherwise stop\nif(dragging % |(dx,dy)|>.0001, playanimation(), pauseanimation());\n";
+$43704383203b4f0d$exports = "gsave();\nif(aspectRatio > 1.0,scale(1.0/aspectRatio));\n\n//the following is executed for every rendered frame\nif (dragging,\n    dx = 3 * (sx - mouse().x); dy = 3 * (sy - mouse().y);,\n    dx = .9*dx; dy = .9*dy;\n);\n\nsx = mouse().x;\nsy = mouse().y;\n\n//the rotation matrix: It is modified either if the user is dragging or time passes\nmat = mat * (\n    (1, 0, 0),\n    (0, cos(dy), -sin(dy)),\n    (0, sin(dy), cos(dy))\n) * (\n    (cos(dx), 0, -sin(dx)),\n    (0, 1, 0),\n    (sin(dx), 0, cos(dx))\n);\n\n\n//configuration for the lights in the scene. A light has a position, a gamma-parameter for its shininess and a color\nlightdirs = [\n    ray((.0, .0), -100), //enlights parts of the surface which normal points away from the camera\n    ray((.0, .0), -100),\n    ray((.0, .0), 100), //Has an effect, if the normal of the surface points to the camera\n    ray((.0, .0), 100),\n    (-10, 10, -2.),\n    (10, -8, 3.)\n];\n\ngamma = [1, 10, 1, 10, 5, 5];\n\n// Initialize default colors if not already set by TypeScript\nif(isundefined(colors),\n  colors = [\n      (.3, .5, 1.),\n      (1, 2, 2) / 2,\n      (1., 0.2, 0.1),\n      (2, 2, 1) / 2,\n      .9 * (.7, .8, .3),\n      .9 * (.6, .1, .6)\n  ]\n);\n\n\n// translucent surface: find all roots from back to front\n// opaque surface: stop after first root has been found\nfindAllRoots = alpha < .99;\n\n\ncolorplot(\n  spolyvalues = apply([-2, 0, 2], v, S(ray(#, v))); //evaluate S along ray\n  spoly = B3 * spolyvalues;                         //interpolate to monomial basis\n  D = (spoly_2 * spoly_2) - 4. * spoly_3 * spoly_1; //discriminant of spoly\n  \n  color = (0., 0., 0., 0.); // background color: fully transparent\n  if (D >= 0, //ray intersects ball\n    color = computeColor(\n      #, \n      (-spoly_2 - re(sqrt(D))) / (2 * spoly_3), //intersection entering the ball\n      (-spoly_2 + re(sqrt(D))) / (2 * spoly_3), //intersection leaving the ball\n      color\n    );              \n  );\n  color //return value: WebGL uses premultiplied alpha by default for RGBA which is already our internal representation!!!\n); //render the scene. # is the pixel coordinate\n\ngrestore();\n\n// loop animation if there is motion (and we are not dragging), otherwise stop\nif(dragging % |(dx,dy)|>.0001, playanimation(), pauseanimation());\n";
 
 
 var $3a5589371680172e$exports = {};
@@ -26718,6 +26718,38 @@ class $b21ff53d09a805d0$export$2e2bcd8739ae039 {
     alpha = 1.0;
     zoom = 1.0;
     parameters = {};
+    colors = [
+        [
+            0.3,
+            0.5,
+            1.0
+        ],
+        [
+            0.5,
+            1.0,
+            1.0
+        ],
+        [
+            1.0,
+            0.2,
+            0.1
+        ],
+        [
+            1.0,
+            1.0,
+            0.5
+        ],
+        [
+            0.63,
+            0.72,
+            0.27
+        ],
+        [
+            0.54,
+            0.09,
+            0.54
+        ]
+    ];
     static Algorithms = {
         PolynomialInterpolation: $cfab5d9e7421bb3f$export$2e2bcd8739ae039
     };
@@ -26734,6 +26766,7 @@ class $b21ff53d09a805d0$export$2e2bcd8739ae039 {
         this.setTwoSided(this.twoSided);
         this.setAlpha(this.alpha);
         this.setZoom(this.zoom);
+        this.updateColorsInCindyScript();
         Object.entries(this.parameters).forEach(([name, value])=>this.setParameter(name, value));
     }
     defineCindyScriptFunctions() {
@@ -26777,6 +26810,17 @@ class $b21ff53d09a805d0$export$2e2bcd8739ae039 {
             ...this.parameters
         };
     }
+    getColors() {
+        return this.colors.map((c)=>[
+                ...c
+            ]);
+    }
+    getLightColor(lightIndex) {
+        if (lightIndex < 0 || lightIndex >= this.colors.length) return undefined;
+        return [
+            ...this.colors[lightIndex]
+        ];
+    }
     getParameterNames() {
         return Object.keys(this.parameters);
     }
@@ -26804,6 +26848,58 @@ class $b21ff53d09a805d0$export$2e2bcd8739ae039 {
         this.parameters[name] = value;
         this.cdy.evokeCS(`${name} = (${value});`);
         return this;
+    }
+    setColors(colors) {
+        if (colors.length !== 6) throw new Error("Exactly 6 light colors must be provided");
+        this.colors = colors.map((c)=>{
+            if (c.length !== 3) throw new Error("Each color must have 3 components (RGB)");
+            return [
+                ...c
+            ];
+        });
+        this.updateColorsInCindyScript();
+        return this;
+    }
+    setLightColor(lightIndex, color) {
+        if (lightIndex < 0 || lightIndex >= 6) throw new Error("Light index must be between 0 and 5");
+        if (color.length !== 3) throw new Error("Color must have 3 components (RGB)");
+        this.colors[lightIndex] = [
+            ...color
+        ];
+        this.updateColorsInCindyScript();
+        return this;
+    }
+    setPrimaryColor(color) {
+        if (color.length !== 3) throw new Error("Color must have 3 components (RGB)");
+        // Primary color controls lights 0 and 1 (back lights)
+        this.colors[0] = color.map((c)=>c * 0.6);
+        this.colors[1] = [
+            ...color
+        ];
+        this.updateColorsInCindyScript();
+        return this;
+    }
+    setAccentColor(color) {
+        if (color.length !== 3) throw new Error("Color must have 3 components (RGB)");
+        // Accent color controls lights 2 and 3 (front lights)
+        this.colors[2] = color.map((c)=>c * 0.8);
+        this.colors[3] = [
+            ...color
+        ];
+        this.updateColorsInCindyScript();
+        return this;
+    }
+    setSecondaryColor(color) {
+        if (color.length !== 3) throw new Error("Color must have 3 components (RGB)");
+        // Secondary color controls lights 4 and 5 (side lights)
+        this.colors[4] = color.map((c)=>c * 0.9);
+        this.colors[5] = color.map((c)=>c * 0.85);
+        this.updateColorsInCindyScript();
+        return this;
+    }
+    updateColorsInCindyScript() {
+        const csColors = this.colors.map((c)=>`(${c[0]}, ${c[1]}, ${c[2]})`).join(", ");
+        this.cdy.evokeCS(`colors = [${csColors}];`);
     }
     setAlgorithm(algorithm) {
         this.algorithm = algorithm;

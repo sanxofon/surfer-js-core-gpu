@@ -23,6 +23,7 @@ export class SurferCoreGpu {
     protected parameters: {
         [key: string]: number;
     };
+    protected colors: number[][];
     static readonly Algorithms: {
         readonly PolynomialInterpolation: typeof PolynomialInterpolation;
     };
@@ -36,12 +37,19 @@ export class SurferCoreGpu {
     getParameters(): {
         [key: string]: number;
     };
+    getColors(): number[][];
+    getLightColor(lightIndex: number): number[] | undefined;
     getParameterNames(): string[];
     setExpression(expression: string): this;
     setTwoSided(hasTwoSides: boolean): this;
     setAlpha(alpha: number): this;
     setZoom(zoom: number): this;
     setParameter(name: string, value: number): this;
+    setColors(colors: number[][]): this;
+    setLightColor(lightIndex: number, color: number[]): this;
+    setPrimaryColor(color: number[]): this;
+    setAccentColor(color: number[]): this;
+    setSecondaryColor(color: number[]): this;
     setAlgorithm(algorithm: PolynomialInterpolation): void;
     static create(container: HTMLElement, width?: number, height?: number): Promise<SurferCoreGpu>;
 }

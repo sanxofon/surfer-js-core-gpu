@@ -34,15 +34,17 @@ lightdirs = [
 
 gamma = [1, 10, 1, 10, 5, 5];
 
-        
-colors = [
-    (.3, .5, 1.),
-    (1, 2, 2) / 2,
-    (1., 0.2, 0.1),
-    (2, 2, 1) / 2,
-    .9 * (.7, .8, .3),
-    .9 * (.6, .1, .6)
-];
+// Initialize default colors if not already set by TypeScript
+if(isundefined(colors),
+  colors = [
+      (.3, .5, 1.),
+      (1, 2, 2) / 2,
+      (1., 0.2, 0.1),
+      (2, 2, 1) / 2,
+      .9 * (.7, .8, .3),
+      .9 * (.6, .1, .6)
+  ]
+);
 
 
 // translucent surface: find all roots from back to front

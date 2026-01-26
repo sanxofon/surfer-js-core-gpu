@@ -46,11 +46,20 @@ export default class SurferCoreGpu {
 
   protected parameters: { [key: string]: number } = {};
 
+  protected colors: number[][] = [
+    [0.3, 0.5, 1.0],      // Light 1: Light blue
+    [0.5, 1.0, 1.0],      // Light 2: Cyan
+    [1.0, 0.2, 0.1],      // Light 3: Red
+    [1.0, 1.0, 0.5],      // Light 4: Yellow
+    [0.63, 0.72, 0.27],   // Light 5: Yellowish green
+    [0.54, 0.09, 0.54],   // Light 6: Purple
+  ];
+
   public static readonly Algorithms: {
     readonly PolynomialInterpolation: typeof PolynomialInterpolation;
   } = {
-    PolynomialInterpolation,
-  };
+      PolynomialInterpolation,
+    };
 
   private constructor(
     api: CindyJS.ApiV1,
@@ -73,6 +82,7 @@ export default class SurferCoreGpu {
     this.setTwoSided(this.twoSided);
     this.setAlpha(this.alpha);
     this.setZoom(this.zoom);
+    this.updateColorsInCindyScript();
 
     Object.entries(this.parameters).forEach(([name, value]) =>
       this.setParameter(name, value),
@@ -125,6 +135,15 @@ export default class SurferCoreGpu {
     return { ...this.parameters };
   }
 
+  getColors(): number[][] {
+    return this.colors.map((c) => [...c]);
+  }
+
+  getLightColor(lightIndex: number): number[] | undefined {
+    if (lightIndex < 0 || lightIndex >= this.colors.length) return undefined;
+    return [...this.colors[lightIndex]];
+  }
+
   getParameterNames(): string[] {
     return Object.keys(this.parameters);
   }
@@ -157,6 +176,72 @@ export default class SurferCoreGpu {
     this.parameters[name] = value;
     this.cdy.evokeCS(`${name} = (${value});`);
     return this;
+  }
+
+  setColors(colors: number[][]): this {
+    if (colors.length !== 6) {
+      throw new Error('Exactly 6 light colors must be provided');
+    }
+    this.colors = colors.map((c) => {
+      if (c.length !== 3) {
+        throw new Error('Each color must have 3 components (RGB)');
+      }
+      return [...c];
+    });
+    this.updateColorsInCindyScript();
+    return this;
+  }
+
+  setLightColor(lightIndex: number, color: number[]): this {
+    if (lightIndex < 0 || lightIndex >= 6) {
+      throw new Error('Light index must be between 0 and 5');
+    }
+    if (color.length !== 3) {
+      throw new Error('Color must have 3 components (RGB)');
+    }
+    this.colors[lightIndex] = [...color];
+    this.updateColorsInCindyScript();
+    return this;
+  }
+
+  setPrimaryColor(color: number[]): this {
+    if (color.length !== 3) {
+      throw new Error('Color must have 3 components (RGB)');
+    }
+    // Primary color controls lights 0 and 1 (back lights)
+    this.colors[0] = color.map((c) => c * 0.6);
+    this.colors[1] = [...color];
+    this.updateColorsInCindyScript();
+    return this;
+  }
+
+  setAccentColor(color: number[]): this {
+    if (color.length !== 3) {
+      throw new Error('Color must have 3 components (RGB)');
+    }
+    // Accent color controls lights 2 and 3 (front lights)
+    this.colors[2] = color.map((c) => c * 0.8);
+    this.colors[3] = [...color];
+    this.updateColorsInCindyScript();
+    return this;
+  }
+
+  setSecondaryColor(color: number[]): this {
+    if (color.length !== 3) {
+      throw new Error('Color must have 3 components (RGB)');
+    }
+    // Secondary color controls lights 4 and 5 (side lights)
+    this.colors[4] = color.map((c) => c * 0.9);
+    this.colors[5] = color.map((c) => c * 0.85);
+    this.updateColorsInCindyScript();
+    return this;
+  }
+
+  private updateColorsInCindyScript(): void {
+    const csColors = this.colors
+      .map((c) => `(${c[0]}, ${c[1]}, ${c[2]})`)
+      .join(', ');
+    this.cdy.evokeCS(`colors = [${csColors}];`);
   }
 
   setAlgorithm(algorithm: PolynomialInterpolation) {

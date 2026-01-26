@@ -50,6 +50,54 @@ s.getTwoSided();
 // false
 ```
 
+### Color Customization
+
+The renderer uses 6 light sources to illuminate the surface. You can customize the colors using either the simplified key-color API or control individual lights directly.
+
+**Key Colors (Recommended):**
+
+```typescript
+// Set primary color (controls back lighting - lights 0-1)
+s.setPrimaryColor([0.3, 0.5, 1.0]);  // Blue
+
+// Set accent color (controls front lighting - lights 2-3)
+s.setAccentColor([1.0, 0.2, 0.1]);   // Red
+
+// Set secondary color (controls side lighting - lights 4-5)
+s.setSecondaryColor([0.6, 0.7, 0.3]); // Yellowish green
+```
+
+**Individual Light Control:**
+
+```typescript
+// Set all 6 light colors at once
+s.setColors([
+  [0.3, 0.5, 1.0],   // Light 0
+  [0.5, 1.0, 1.0],   // Light 1
+  [1.0, 0.2, 0.1],   // Light 2
+  [1.0, 1.0, 0.5],   // Light 3
+  [0.63, 0.72, 0.27], // Light 4
+  [0.54, 0.09, 0.54]  // Light 5
+]);
+
+// Set a single light color
+s.setLightColor(0, [1.0, 0.0, 0.0]); // Red for light 0
+```
+
+**Get Color Information:**
+
+```typescript
+// Get all 6 light colors
+const colors = s.getColors();
+// Returns: [[r, g, b], [r, g, b], ...]
+
+// Get a specific light color
+const color0 = s.getLightColor(0);
+// Returns: [r, g, b] or undefined if invalid index
+```
+
+**Note:** RGB values should be in the range [0, 1], though values above 1 can be used for HDR-like effects.
+
 Some elements of the intersection algorithm can be tweaked as well:
 
 ```typescript
@@ -90,12 +138,16 @@ your imports to
 import '@imaginary-maths/surfer-core-gpu/dist/surfer-core-gpu-bundled-cindyjs';
 ```
 
-# Build
+## Build
 
 ```shell
 npm install
 npm run build
 ```
+
+## Troubleshoot
+
+MAke sure the server is sending the correct MIME type for the .mjs file, failing to do so may cause the browser to block its loading. The problem usually arises because the server is not configured to serve .mjs files with the correct MIME type (text/javascript). In Apache edit `conf/mime.types` and change `js` to `js mjs`.
 
 ## Credits
 
