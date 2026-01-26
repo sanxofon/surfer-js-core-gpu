@@ -1,56 +1,14 @@
-# surfer-core-gpu
+# surfer-core-gpu (with color customization)
 
-This package provides a WebGL (actually, CindyJS and CindyGL) based renderer for
+This is a color customization fork of the original [IMAGINARY](https://github.com/imaginary) repository.
+
+The original package provides a WebGL (actually, CindyJS and CindyGL) based renderer for
 algebraic surfaces. It can also be used for other types of implicit surfaces.
 However, the quality of the results may vary a lot.
 
-Check out the [demo](https://imaginary.github.io/surfer-js-core-gpu/demo.html).
+Check out the UPDATED [demo](https://sanxofon.github.io/surfer-js-core-gpu/demo.html) with color selectors.
 
-## Usage
-
-Add the package to your project:
-
-```shell
-npm install @imaginary-maths/surfer-core-gpu
-```
-
-Import the main class, instantiate and modify:
-
-```typescript
-import '@imaginary-maths/surfer-core-gpu';
-
-// ...
-
-const container = document.getElementById('my-container');
-const s = await SurferCoreGpu.create(container, 512, 512);
-
-s.setExpression('x^2+y^2+z^2+x*y*z-4*a');
-s.setAlpha(0.75);
-s.setZoom(0.1);
-s.setParameter('a', 1);
-
-// For translucent surfaces, having the same material for both sides often looks better.
-s.setTwoSided(false);
-```
-
-Some getters are also available:
-
-```typescript
-s.getExpression();
-// "x^2+y^2+z^2+x*y*z-4*a"
-s.getAlpha();
-// 0.75
-s.getZoom();
-// 0.1
-s.getParameterNames();
-// ["a"]
-s.getParameters();
-// { a: 1.0 }
-s.getTwoSided();
-// false
-```
-
-### Color Customization
+## Color Customization
 
 The renderer uses 6 light sources to illuminate the surface. You can customize the colors using either the simplified key-color API or control individual lights directly.
 
@@ -97,6 +55,50 @@ const color0 = s.getLightColor(0);
 ```
 
 **Note:** RGB values should be in the range [0, 1], though values above 1 can be used for HDR-like effects.
+
+## Usage
+
+Add the package to your project:
+
+```shell
+npm install @imaginary-maths/surfer-core-gpu
+```
+
+Import the main class, instantiate and modify:
+
+```typescript
+import '@imaginary-maths/surfer-core-gpu';
+
+// ...
+
+const container = document.getElementById('my-container');
+const s = await SurferCoreGpu.create(container, 512, 512);
+
+s.setExpression('x^2+y^2+z^2+x*y*z-4*a');
+s.setAlpha(0.75);
+s.setZoom(0.1);
+s.setParameter('a', 1);
+
+// For translucent surfaces, having the same material for both sides often looks better.
+s.setTwoSided(false);
+```
+
+Some getters are also available:
+
+```typescript
+s.getExpression();
+// "x^2+y^2+z^2+x*y*z-4*a"
+s.getAlpha();
+// 0.75
+s.getZoom();
+// 0.1
+s.getParameterNames();
+// ["a"]
+s.getParameters();
+// { a: 1.0 }
+s.getTwoSided();
+// false
+```
 
 Some elements of the intersection algorithm can be tweaked as well:
 
@@ -153,6 +155,7 @@ MAke sure the server is sending the correct MIME type for the .mjs file, failing
 
 Created by [Christian Stussak](https://github.com/porst17) for IMAGINARY gGmbH,
 based on a prototype by [Aaron Montag](https://github.com/montaga).
+Color customization / Color wheel by [Santiago Chávez Novaro](https://github.com/sanxofon)
 
 ## License
 
