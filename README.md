@@ -12,6 +12,8 @@ Check out the UPDATED [demo](https://sanxofon.github.io/surfer-js-core-gpu/demo.
 
 The renderer uses 6 light sources to illuminate the surface. You can customize the colors using either the simplified key-color API or control individual lights directly.
 
+The demo (`demo.html`) includes interactive color wheel pickers for easy color selection.
+
 **Key Colors (Recommended):**
 
 ```typescript
@@ -129,6 +131,20 @@ The `SurferGpuCore` object exposes two internal elements:
   CSS properties such as background color, width and height can be applied to
   this element.
 
+## Demo UI
+
+The included `demo.html` showcases the color customization features with an interactive color wheel UI powered by [iro.js](https://iro.js.org/).
+
+### Demo Dependencies
+
+The demo uses **iro.js** v5 for the color picker interface, loaded via CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+```
+
+**Note:** iro.js is only required for the demo UI. The core library has no dependency on iro.js - you can use any color picker or build your own UI with the color customization API.
+
 ## Bundled CindyJS
 
 This package uses the [CindyJS](https://cindyjs.org) package internally. Since
@@ -149,7 +165,7 @@ npm run build
 
 ## Troubleshoot
 
-MAke sure the server is sending the correct MIME type for the .mjs file, failing to do so may cause the browser to block its loading. The problem usually arises because the server is not configured to serve .mjs files with the correct MIME type (text/javascript). In Apache edit `conf/mime.types` and change `js` to `js mjs`.
+Make sure the server is sending the correct MIME type for the .mjs file, failing to do so may cause the browser to block its loading. The problem usually arises because the server is not configured to serve .mjs files with the correct MIME type (text/javascript). In Apache edit `conf/mime.types` and change `js` to `js mjs`.
 
 ## Credits
 
