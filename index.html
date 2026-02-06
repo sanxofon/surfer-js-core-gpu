@@ -137,7 +137,15 @@
     .icon-arg-a, .icon-opacity, .icon-zoom {
       color: transparent;
       background-size: 60%;
-    } 
+    }
+
+    /* Hide argument a slider when no 'a' in formula */
+    .argument-a {
+      display: none;
+    }
+    .argument-a.visible {
+      display: flex;
+    }
 
     /* --- 3. Color Picker Section --- */
     .color-section {
@@ -239,7 +247,7 @@
       
       <!-- 2. Vertical Sliders -->
       <div class="sliders-wrapper">
-        <div class="slider-column">
+        <div class="slider-column argument-a">
           <div class="slider-track">
             <input title="Argument a" type="range" min="-0.2" value="1.0" max="1.2" step="0.001" id="sliderParamA" orient="vertical" />
           </div>
@@ -359,7 +367,21 @@
       const height = container.clientHeight;
       
       const surferCoreGpu = await SurferCoreGpu.create(container, width, height);
-      surferCoreGpu.setExpression(input.value);
+
+      function setExpressionAndCheckA() {
+        // Check if 'a' is in the expression and show/hide argument slider accordingly
+        const hasArgumentA = /\ba\b/.test(input.value);
+        const argumentASlider = document.querySelector('.argument-a');
+        if (hasArgumentA) {
+          argumentASlider.classList.add('visible');
+        } else {
+          argumentASlider.classList.remove('visible');
+        }
+        surferCoreGpu.setExpression(input.value);
+      }
+
+      // surferCoreGpu.setExpression(input.value);
+      setExpressionAndCheckA();
       surferCoreGpu.setParameter('a', sliderParamA.valueAsNumber);
       surferCoreGpu.setZoom(Math.pow(2, sliderZoom.valueAsNumber));
       surferCoreGpu.setAlpha(sliderAlpha.valueAsNumber);
@@ -393,10 +415,8 @@
 
       
       // Events
-      const updateExpression = () => surferCoreGpu.setExpression(input.value);
-      
-      input.addEventListener('keypress', (e) => e.code === 'Enter' ? updateExpression() : null);
-      inputEnter.addEventListener('click', updateExpression);
+      input.addEventListener('keypress', (e) => e.code === 'Enter' ? setExpressionAndCheckA() : null);
+      inputEnter.addEventListener('click', setExpressionAndCheckA);
       
       sliderParamA.addEventListener('input', () => surferCoreGpu.setParameter('a', sliderParamA.valueAsNumber));
       sliderAlpha.addEventListener('input', () => surferCoreGpu.setAlpha(sliderAlpha.valueAsNumber));
@@ -449,7 +469,8 @@
         } else if (action === 'clear') {
           input.value = "";
         } else if (action === 'enter') {
-          surferCoreGpu.setExpression(input.value);
+          setExpressionAndCheckA();
+          // surferCoreGpu.setExpression(input.value);
         }
       } 
     
