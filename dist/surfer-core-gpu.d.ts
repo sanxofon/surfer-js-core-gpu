@@ -48,8 +48,8 @@ export class SurferCoreGpu {
     setColors(colors: number[][]): this;
     setLightColor(lightIndex: number, color: number[]): this;
     setPrimaryColor(color: number[]): this;
-    setAccentColor(color: number[]): this;
     setSecondaryColor(color: number[]): this;
+    setAccentColor(color: number[]): this;
     setAlgorithm(algorithm: PolynomialInterpolation): void;
     static create(container: HTMLElement, width?: number, height?: number): Promise<SurferCoreGpu>;
 }

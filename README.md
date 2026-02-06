@@ -18,13 +18,13 @@ The demo (`demo.html`) includes interactive color wheel pickers for easy color s
 
 ```typescript
 // Set primary color (controls back lighting - lights 0-1)
-s.setPrimaryColor([0.3, 0.5, 1.0]);  // Blue
+s.setPrimaryColor([0.0, 0.0, 1.0]);  // Blue
 
-// Set accent color (controls front lighting - lights 2-3)
-s.setAccentColor([1.0, 0.2, 0.1]);   // Red
+// Set secondary color (controls front lighting - lights 2-3)
+s.setSecondaryColor([1.0, 0.0, 0.0]);   // Red
 
-// Set secondary color (controls side lighting - lights 4-5)
-s.setSecondaryColor([0.6, 0.7, 0.3]); // Yellowish green
+// Set accent color (controls side lighting - lights 4-5)
+s.setAccentColor([0.5, 0.5, 0.5]); // Gray
 ```
 
 **Individual Light Control:**
@@ -32,12 +32,12 @@ s.setSecondaryColor([0.6, 0.7, 0.3]); // Yellowish green
 ```typescript
 // Set all 6 light colors at once
 s.setColors([
-  [0.3, 0.5, 1.0],   // Light 0
-  [0.5, 1.0, 1.0],   // Light 1
-  [1.0, 0.2, 0.1],   // Light 2
-  [1.0, 1.0, 0.5],   // Light 3
-  [0.63, 0.72, 0.27], // Light 4
-  [0.54, 0.09, 0.54]  // Light 5
+  [0.0, 0.0, 1.0],   // Light 0
+  [0.0, 0.0, 1.0],   // Light 1
+  [1.0, 0.0, 0.0],   // Light 2
+  [1.0, 0.0, 0.0],   // Light 3
+  [0.5, 0.5, 0.5], // Light 4
+  [0.5, 0.5, 0.5]  // Light 5
 ]);
 
 // Set a single light color

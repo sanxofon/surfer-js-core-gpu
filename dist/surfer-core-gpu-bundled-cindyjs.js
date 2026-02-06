@@ -26879,9 +26879,9 @@ class $b21ff53d09a805d0$export$2e2bcd8739ae039 {
         this.updateColorsInCindyScript();
         return this;
     }
-    setAccentColor(color) {
+    setSecondaryColor(color) {
         if (color.length !== 3) throw new Error("Color must have 3 components (RGB)");
-        // Accent color controls lights 2 and 3 (front lights)
+        // Secondary color controls lights 2 and 3 (front lights)
         this.colors[2] = color.map((c)=>c * 0.8);
         this.colors[3] = [
             ...color
@@ -26889,9 +26889,9 @@ class $b21ff53d09a805d0$export$2e2bcd8739ae039 {
         this.updateColorsInCindyScript();
         return this;
     }
-    setSecondaryColor(color) {
+    setAccentColor(color) {
         if (color.length !== 3) throw new Error("Color must have 3 components (RGB)");
-        // Secondary color controls lights 4 and 5 (side lights)
+        // Accent color controls lights 4 and 5 (side lights)
         this.colors[4] = color.map((c)=>c * 0.9);
         this.colors[5] = color.map((c)=>c * 0.85);
         this.updateColorsInCindyScript();
