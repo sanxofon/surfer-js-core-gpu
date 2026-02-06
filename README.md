@@ -6,13 +6,13 @@ The original package provides a WebGL (actually, CindyJS and CindyGL) based rend
 algebraic surfaces. It can also be used for other types of implicit surfaces.
 However, the quality of the results may vary a lot.
 
-Check out the UPDATED [demo](https://sanxofon.github.io/surfer-js-core-gpu/demo.html) with color selectors.
+Check out the UPDATED [demo](https://sanxofon.github.io/surfer-js-core-gpu/) with color selectors.
 
 ## Color Customization
 
 The renderer uses 6 light sources to illuminate the surface. You can customize the colors using either the simplified key-color API or control individual lights directly.
 
-The demo (`demo.html`) includes interactive color wheel pickers for easy color selection.
+The demo (renamed to `index.html`) includes interactive color wheel pickers for easy color selection.
 
 **Key Colors (Recommended):**
 
