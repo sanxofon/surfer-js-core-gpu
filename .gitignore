@@ -2,3 +2,4 @@ dist-dev/
 node_modules/
 .parcel-cache/
 _notas/
+.vscode/

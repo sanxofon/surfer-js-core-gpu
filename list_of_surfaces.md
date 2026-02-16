@@ -1,4 +1,4 @@
-# List of formulas
+# List of surfaces
 
 **Kummer Quartic:**
     (x^2+y^2+z^2-(0.5+a)^2)^2-(3*((0.5+a)^2)-1)/(3-((0.5+a)^2))*(1-z-sqrt(2)*x)*(1-z+sqrt(2)*x)*(1+z+sqrt(2)*y)*(1+z-sqrt(2)*y)
