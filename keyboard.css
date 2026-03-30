@@ -1,7 +1,9 @@
 .keyboard {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    gap: 15px;
 }
 
 .keyboard * {
@@ -18,11 +20,11 @@
 
 .key {
     flex: 1;
-    height: 50px;
+    height: 28px;
     background: #f3f4f6;
     border: none;
     border-radius: 6px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
     color: #000000;
     cursor: pointer;

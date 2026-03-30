@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Surfer Touch Interface</title>
-  
+
   <!-- Local Dependencies -->
   <script type="text/javascript" src="./vendor/CindyJS/v0.8.8/Cindy.js"></script>
   <script type="text/javascript" src="./vendor/CindyJS/v0.8.8/CindyGL.js"></script>
   <script type="text/javascript" src="./vendor/CindyJS/v0.8.8/symbolic.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script> -->
-  <script src="./vendor/iro.5.5.2.js"></script> 
+  <script src="./vendor/iro.5.5.2.js"></script>
   <link rel="stylesheet" href="./keyboard.css" />
 
   <style>
@@ -25,8 +25,10 @@
 
     * {
       box-sizing: border-box;
-      -webkit-user-select: none; /* Prevent text selection on touch */
-      user-select: none; /* Prevent text selection on touch */
+      -webkit-user-select: none;
+      /* Prevent text selection on touch */
+      user-select: none;
+      /* Prevent text selection on touch */
     }
 
     body {
@@ -36,11 +38,12 @@
       height: 100vh;
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      
+
       /* Main Layout Grid */
-      display: grid;
-      grid-template-columns: 100vh 1fr; /* Left side is square (based on height), Right fills rest */
-      gap: 15px;
+      /* display: grid; */
+      /* grid-template-columns: 100vh 1fr; */
+      /* Left side is square (based on height), Right fills rest */
+      /* gap: 15px; */
     }
 
     /* --- 1. Main Graphic Display --- */
@@ -62,17 +65,20 @@
     /* --- Right Panel Container --- */
     .controls-panel {
       display: grid;
-      grid-template-rows: 1fr auto auto; /* Sliders/Colors (flex), Input (fixed), Keyboard (fixed) */
-      gap: 15px;
-      height: 100%;
+      grid-template-rows: 1fr auto auto;
+      /* Colors/Main/Sliders */
+      gap: 0;
+      height: 96vh;
     }
 
     /* Top Section of Right Panel (Sliders + Colors) */
     .top-controls {
       display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 15px;
-      min-height: 0; /* Important for nested scrolling/flex */
+      grid-template-columns: auto 1fr auto;
+      gap: 0;
+      width: 100%;
+      min-height: 0;
+      /* Important for nested scrolling/flex */
     }
 
     /* --- 2. Vertical Sliders Section --- */
@@ -82,6 +88,7 @@
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
+      gap: 15px;
     }
 
     .slider-column {
@@ -93,7 +100,8 @@
     }
 
     .slider-track {
-      flex-grow: 1; /* Fill available height */
+      flex-grow: 1;
+      /* Fill available height */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -102,8 +110,10 @@
 
     /* Custom Vertical Slider Styling */
     input[type=range][orient=vertical] {
-      writing-mode: bt-lr; /* IE/Edge */
-      -webkit-appearance: slider-vertical; /* Webkit */
+      writing-mode: bt-lr;
+      /* IE/Edge */
+      -webkit-appearance: slider-vertical;
+      /* Webkit */
       appearance: slider-vertical;
       width: 8px;
       height: 100%;
@@ -124,17 +134,35 @@
     }
 
     /* Icon Fallbacks (if images missing) */
-    .icon-arg-a::before { content: "a"; }
-    .icon-opacity::before { content: "▒"; }
-    .icon-zoom::before { content: "🔍"; }
+    .icon-arg-a::before {
+      content: "a";
+    }
+
+    .icon-opacity::before {
+      content: "▒";
+    }
+
+    .icon-zoom::before {
+      content: "🔍";
+    }
 
     /* Override with background images if available */
-    .icon-arg-a { background-image: url("./img/a-black.svg"); }
-    .icon-opacity { background-image: url("./img/opacity-black-cropped.svg"); }
-    .icon-zoom { background-image: url("./img/zoom-black-cropped.svg"); }
-    
+    .icon-arg-a {
+      background-image: url("./img/a-black.svg");
+    }
+
+    .icon-opacity {
+      background-image: url("./img/opacity-black-cropped.svg");
+    }
+
+    .icon-zoom {
+      background-image: url("./img/zoom-black-cropped.svg");
+    }
+
     /* Hide text fallback if image loads (requires JS or simpler css hack, leaving text as backup) */
-    .icon-arg-a, .icon-opacity, .icon-zoom {
+    .icon-arg-a,
+    .icon-opacity,
+    .icon-zoom {
       color: transparent;
       background-size: 60%;
     }
@@ -143,6 +171,7 @@
     .argument-a {
       display: none;
     }
+
     .argument-a.visible {
       display: flex;
     }
@@ -150,15 +179,26 @@
     /* --- 3. Color Picker Section --- */
     .color-section {
       display: flex;
-      flex-direction: row;
-      justify-content: space-evenly; /* Distribute vertically */
+      flex-direction: column;
+      justify-content: space-evenly;
+      /* Distribute vertically */
       align-items: center;
     }
-    
+
+    .color-middle-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      /* Distribute vertically */
+      align-items: center;
+      height: fit-content;
+    }
+
     .color-picker-item {
       text-align: center;
+      margin-top: 15px;
     }
-    
+
     .color-picker-item h3 {
       margin: 0 0 15px 0;
       font-size: 14px;
@@ -174,16 +214,18 @@
       align-items: center;
       gap: 10px;
       padding: 5px;
+      width: 100%;
     }
 
     #inp {
       border: var(--border-thin);
       border-radius: 6px;
       flex-grow: 1;
-      height: 50px;
+      height: 28px;
       font-size: 1.2rem;
       padding: 0 10px;
-      width: 100%; /* Fix width issue */
+      width: 100%;
+      /* Fix width issue */
     }
 
     #inp:focus {
@@ -191,31 +233,33 @@
     }
 
     .icon-enter {
-      width: 50px;
-      height: 50px;
+      width: 70px;
+      height: 28px;
       background-image: url("./img/paper-plane-black.svg");
-      background-size: 60%;
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       cursor: pointer;
       border-radius: 4px;
       background-color: #6ffb53;
     }
+
     /* .icon-enter:active {
       background-color: #ddd;
     } */
 
     .icon-shuffle {
-      width: 50px;
-      height: 50px;
+      width: 100%;
+      height: 100%;
+      background-size: contain;
       background-image: url("./img/shuffle-black.svg");
-      background-size: 60%;
       background-repeat: no-repeat;
       background-position: center;
       cursor: pointer;
       border-radius: 4px;
       background-color: #e753fb;
     }
+
     .icon-shuffle:active {
       background-color: #ddd;
     }
@@ -228,83 +272,84 @@
     .icon-clear {
       width: 24px;
       height: 24px;
-      background-image: url("./img/eraser-black.svg"); /* Will be white via filter if SVG, otherwise handled by CSS */
+      background-image: url("./img/eraser-black.svg");
+      /* Will be white via filter if SVG, otherwise handled by CSS */
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
     }
 
     /* Responsiveness for slight aspect ratio changes */
-    @media (max-aspect-ratio: 16/10) {
+    /* @media (max-aspect-ratio: 16/10) {
       body {
         grid-template-columns: 1fr;
         grid-template-rows: 50vh 1fr;
         overflow-y: auto;
       }
-      #container { width: 100%; height: 100%; }
-      /* Adjust vertical slider height on small screens */
-      .sliders-wrapper { min-height: 200px; }
-    }
-
+      #container {
+        width: 100%;
+        height: 100%;
+      }
+      .sliders-wrapper {
+        min-height: 200px;
+      }
+    } */
   </style>
 </head>
 
 <body>
 
-  <!-- 1. Graphic Display (Left Column) -->
-  <div id="container"></div>
-
-  <!-- Right Controls Panel -->
+  <!-- Top Section: Sliders & Colors -->
   <div class="controls-panel">
 
-    <!-- Top Section: Sliders & Colors -->
+    <!-- Right Controls Panel -->
     <div class="top-controls">
-      
+
+      <!-- 3. Color Pickers -->
+      <div class="color-section">
+        <div class="color-middle-block">
+          <div class="color-picker-item">
+            <div id="picker-primary"></div>
+          </div>
+          <div class="color-picker-item">
+            <div id="picker-secondary"></div>
+          </div>
+          <!-- <div class="color-picker-item">
+              <div id="picker-accent"></div>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- 1. Graphic Display (Left Column) -->
+      <div id="container"></div>
+
       <!-- 2. Vertical Sliders -->
       <div class="sliders-wrapper">
         <div class="slider-column argument-a">
           <div class="slider-track">
-            <input title="Argument a" type="range" min="-0.2" value="1.0" max="1.2" step="0.001" id="sliderParamA" orient="vertical" />
+            <input title="Argument a" type="range" min="-0.2" value="1.0" max="1.2" step="0.001" id="sliderParamA"
+              orient="vertical" />
           </div>
           <div class="slider-icon icon-arg-a" title="Argument a"></div>
         </div>
 
         <div class="slider-column">
           <div class="slider-track">
-            <input title="Opacity" type="range" min="0.3" value="1.0" max="1.0" step="0.001" id="sliderAlpha" orient="vertical" />
+            <input title="Opacity" type="range" min="0.3" value="1.0" max="1.0" step="0.001" id="sliderAlpha"
+              orient="vertical" />
           </div>
           <div class="slider-icon icon-opacity" title="Opacity"></div>
         </div>
 
         <div class="slider-column">
           <div class="slider-track">
-            <input title="Zoom" type="range" min="-3" value="-1.0" max="0.5" step="0.001" id="sliderZoom" orient="vertical" />
+            <input title="Zoom" type="range" min="-3" value="-1.0" max="0.5" step="0.001" id="sliderZoom"
+              orient="vertical" />
           </div>
           <div class="slider-icon icon-zoom" title="Zoom"></div>
         </div>
       </div>
 
-      <!-- 3. Color Pickers -->
-      <div class="color-section">
-        <div class="color-picker-item">
-          <div id="picker-primary"></div>
-        </div>
-        <div class="color-picker-item">
-          <div id="picker-secondary"></div>
-        </div>
-        <!-- <div class="color-picker-item">
-            <div id="picker-accent"></div>
-        </div> -->
-      </div>
-
-    </div>
-
-    <!-- 4. Input Section -->
-    <div class="input-section">
-      <input title="Formula" type="text" id="inp"
-        value="" />
-      <!-- <div class="icon-enter" id="inp-enter" title="Enter"></div> -->
-      <div class="icon-shuffle" id="inp-shuffle" title="Shuffle"></div>
     </div>
 
     <!-- 5. Keyboard Section -->
@@ -323,7 +368,18 @@
           <button class="key" data-val="9">9</button>
           <button class="key" data-val="0">0</button>
         </div>
-        
+        <div class="key-row">
+          <!-- 4. Input Section -->
+          <div class="input-section">
+            <input title="Formula" type="text" id="inp" value="" />
+            <div class="icon-enter" id="inp-enter" title="Enter"></div>
+            <!-- <div class="icon-shuffle" id="inp-shuffle" title="Shuffle"></div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="keyboard">
+
         <!-- Row 2: Operators -->
         <div class="key-row">
           <button class="key" data-val=".">.</button>
@@ -334,9 +390,8 @@
           <button class="key" data-val="*">*</button>
           <button class="key" data-val="/">/</button>
           <button class="key" data-val="^">^</button>
-          <button class="key" data-val="sqrt(2)">√</button>
+          <!--button class="key" data-val="sqrt(2)">√</button-->
         </div>
-        
         <!-- Row 3: Letters and Actions -->
         <div class="key-row">
           <button class="key" data-val="x">x</button>
@@ -348,7 +403,7 @@
           <button class="key action" data-action="right">&gt;</button>
           <button class="key action delete" data-action="delete">⌫</button>
           <button class="key action clear" data-action="clear"><span class="icon-clear"></span></button>
-          <button class="key enter" data-action="enter"><span class="icon-enter"></span></button>
+          <button class="key action shuffle" data-action="shuffle"><span class="icon-shuffle"></span></button>
         </div>
       </div>
     </div>
@@ -359,16 +414,16 @@
   <script type="module">
     // Assuming SurferCoreGpu file exists locally as per your demo
     import SurferCoreGpu from './dist/surfer-core-gpu-bundled-cindyjs.mjs';
-    
+
     const container = document.getElementById('container');
     const input = document.getElementById('inp');
-    // const inputEnter = document.getElementById('inp-enter');
-    const inputShuffle = document.getElementById('inp-shuffle');
-    
+    const inputEnter = document.getElementById('inp-enter');
+    // const inputShuffle = document.getElementById('inp-shuffle');
+
     const sliderParamA = document.getElementById('sliderParamA');
     const sliderAlpha = document.getElementById('sliderAlpha');
     const sliderZoom = document.getElementById('sliderZoom');
-    
+
     function iroToRgb(iroColor) {
       return [
         iroColor.rgb.r / 255,
@@ -399,7 +454,7 @@
       // Using clientWidth/Height to ensure it fits the CSS grid cell
       const width = container.clientWidth;
       const height = container.clientHeight;
-      
+
       const surferCoreGpu = await SurferCoreGpu.create(container, width, height);
 
       // Randomly select a formula from the list on load
@@ -422,19 +477,19 @@
       surferCoreGpu.setParameter('a', sliderParamA.valueAsNumber);
       surferCoreGpu.setZoom(Math.pow(2, sliderZoom.valueAsNumber));
       surferCoreGpu.setAlpha(sliderAlpha.valueAsNumber);
-      
+
       // Initialize Color Pickers
       const pickerPrimary = new iro.ColorPicker('#picker-primary', {
-        width: 140, // Adjusted size for layout
+        width: 100, // Adjusted size for layout
         color: '#0000ff',
         layout: [
           { component: iro.ui.Wheel, options: {} },
           { component: iro.ui.Slider, options: { sliderType: 'value' } }
         ]
       });
-      
+
       const pickerSecondary = new iro.ColorPicker('#picker-secondary', {
-        width: 140, // Adjusted size for layout
+        width: 100, // Adjusted size for layout
         color: '#ff0000',
         layout: [
           { component: iro.ui.Wheel, options: {} },
@@ -445,34 +500,34 @@
       pickerPrimary.on('color:change', (color) => {
         surferCoreGpu.setPrimaryColor(iroToRgb(color));
       });
-      
+
       pickerSecondary.on('color:change', (color) => {
         surferCoreGpu.setSecondaryColor(iroToRgb(color));
       });
 
-      
+
       // Events
       input.addEventListener('keypress', (e) => e.code === 'Enter' ? setExpressionAndCheckA() : null);
-      // inputEnter.addEventListener('click', setExpressionAndCheckA);
-      inputShuffle.addEventListener('click', () => {
-        input.value = formula_list[Math.floor(Math.random() * formula_list.length)][1];
-        setExpressionAndCheckA();
-      });
-      
+      inputEnter.addEventListener('click', setExpressionAndCheckA);
+      // inputShuffle.addEventListener('click', () => {
+      //   input.value = formula_list[Math.floor(Math.random() * formula_list.length)][1];
+      //   setExpressionAndCheckA();
+      // });
+
       sliderParamA.addEventListener('input', () => surferCoreGpu.setParameter('a', sliderParamA.valueAsNumber));
       sliderAlpha.addEventListener('input', () => surferCoreGpu.setAlpha(sliderAlpha.valueAsNumber));
       sliderZoom.addEventListener('input', () => surferCoreGpu.setZoom(Math.pow(2, sliderZoom.valueAsNumber)));
-      
+
       // Keyboard Logic
       const keys = document.querySelectorAll('.key');
       keys.forEach(key => {
         key.addEventListener('click', (e) => {
           e.preventDefault(); // Prevent focus loss issues on touch
           input.focus();
-          
+
           const val = key.getAttribute('data-val');
           const action = key.getAttribute('data-action');
-          
+
           if (val) {
             insertText(val);
           } else if (action) {
@@ -480,7 +535,7 @@
           }
         });
       });
-      
+
       function insertText(text) {
         const start = input.selectionStart;
         const end = input.selectionEnd;
@@ -489,12 +544,12 @@
         const newPos = start + text.length;
         input.setSelectionRange(newPos, newPos);
       }
-      
+
       function handleAction(action) {
         const start = input.selectionStart;
         const end = input.selectionEnd;
         const value = input.value;
-        
+
         if (action === 'delete') {
           if (start === end && start > 0) {
             input.value = value.substring(0, start - 1) + value.substring(end);
@@ -509,15 +564,20 @@
           if (start < value.length) input.setSelectionRange(start + 1, start + 1);
         } else if (action === 'clear') {
           input.value = "";
-        } else if (action === 'enter') {
+        } else if (action === 'shuffle') {
+          input.value = formula_list[Math.floor(Math.random() * formula_list.length)][1];
           setExpressionAndCheckA();
-          // surferCoreGpu.setExpression(input.value);
         }
-      } 
-    
+        //else if (action === 'enter') {
+        // setExpressionAndCheckA();
+        // surferCoreGpu.setExpression(input.value);
+        // }
+      }
+
     }
 
     init();
   </script>
 </body>
+
 </html>
